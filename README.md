@@ -11,13 +11,13 @@ The program reads one command per line from standard input and prints the result
 ---
 
 ## Contents
-- [Quick start](#-quick-start)
-- [Class diagram](#-class-diagram)
-- [Design: where each rule lives](#-design-where-each-rule-lives)
-- [Commands](#-commands)
-- [Errors](#-errors)
-- [Testing](#-testing)
-- [Project structure](#-project-structure)
+- [Quick start](#quick-start)
+- [Class diagram](#class-diagram)
+- [Design: where each rule lives](#design-where-each-rule-lives)
+- [Commands](#commands)
+- [Errors](#errors)
+- [Testing](#testing)
+- [Project structure](#project-structure)
 
 ---
 
