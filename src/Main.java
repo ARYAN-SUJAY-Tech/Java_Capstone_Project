@@ -10,7 +10,6 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Library library = new Library();
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder out = new StringBuilder();
 
         String line;
         while ((line = in.readLine()) != null) {
@@ -20,13 +19,12 @@ public class Main {
             // The single place where every rule failure is caught.
             try {
                 for (String result : execute(library, line.strip())) {
-                    out.append(result).append('\n');
+                    System.out.println(result);
                 }
             } catch (LibraryException e) {
-                out.append("ERROR ").append(e.getMessage()).append('\n');
+                System.out.println("ERROR " + e.getMessage());
             }
         }
-        System.out.print(out);
     }
 
     /** Runs one command and returns the lines it prints. */
