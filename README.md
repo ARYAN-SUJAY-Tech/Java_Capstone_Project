@@ -101,7 +101,7 @@ The code adds a few small things to the diagram above:
 
 ---
 
-## ⌨ Commands
+## Commands
 
 Fields are separated by `|`, so titles and names may contain spaces.
 
