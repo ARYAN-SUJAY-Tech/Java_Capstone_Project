@@ -1,4 +1,4 @@
-# 📚 Library Management System
+# Library Management System
 
 A command-driven library system in Java that manages **items**, **members** and **loans**, with simulated time, fines, reports and reservations.
 
@@ -21,7 +21,7 @@ The program reads one command per line from standard input and prints the result
 
 ---
 
-## 🚀 Quick start
+## Quick start
 
 ```bash
 # Compile
@@ -51,11 +51,11 @@ OK fine 12
 
 ---
 
-## 🧩 Class diagram
+## Class diagram
 
 ![UML class diagram](docs/UML.png)
 
-📄 [PDF version](docs/UML.pdf)
+[PDF version](docs/UML.pdf)
 
 The code adds a few small things to the diagram above:
 
@@ -68,7 +68,7 @@ The code adds a few small things to the diagram above:
 
 ---
 
-## 🏛 Design: where each rule lives
+## Design: where each rule lives
 
 | Rule | Lives in |
 |---|---|
@@ -87,9 +87,9 @@ The code adds a few small things to the diagram above:
 
 | Type | Details | Borrowable | Fine per day late |
 |---|---|:---:|---|
-| `Book` | ID, title, author | ✅ | ₹2 |
-| `Magazine` | ID, title, issue | ✅ | ₹1 |
-| `ReferenceBook` | ID, title, author | ❌ | — |
+| `Book` | ID, title, author | Yes | ₹2 |
+| `Magazine` | ID, title, issue | Yes | ₹1 |
+| `ReferenceBook` | ID, title, author | No | — |
 
 ### Member types
 
@@ -134,7 +134,7 @@ Reports print one line per row, or `NONE` if there are no rows.
 
 ---
 
-## ⚠ Errors
+## Errors
 
 Every failure is a custom exception that extends `LibraryException`. Each one is thrown where its rule is checked and caught once in `Main`, which prints `ERROR <message>`.
 
@@ -149,7 +149,7 @@ Every failure is a custom exception that extends `LibraryException`. Each one is
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Run every test:
 
@@ -173,7 +173,7 @@ diff out.txt tests/sample_expected.txt     # no output means it passed
 
 ---
 
-## 📁 Project structure
+## Project structure
 
 ```text
 .
