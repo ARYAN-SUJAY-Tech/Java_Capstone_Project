@@ -21,26 +21,36 @@ public class Library {
 
     // ---------- ADD_ commands ----------
 
-    public void addBook(String id, String title, String author) {
-        items.put(id, new Book(id, title, author));
+    public void addBook(String id, String title, String author) throws LibraryException {
+        addItem(new Book(id, title, author));
     }
 
-    public void addMagazine(String id, String title, String issue) {
-        items.put(id, new Magazine(id, title, issue));
+    public void addMagazine(String id, String title, String issue) throws LibraryException {
+        addItem(new Magazine(id, title, issue));
     }
 
-    public void addReference(String id, String title, String author) {
-        items.put(id, new ReferenceBook(id, title, author));
+    public void addReference(String id, String title, String author) throws LibraryException {
+        addItem(new ReferenceBook(id, title, author));
+    }
+
+    private void addItem(LibraryItem item) throws InvalidInputException {
+        if (items.containsKey(item.getId())) {
+            throw new InvalidInputException("item " + item.getId() + " already exists");
+        }
+        items.put(item.getId(), item);
     }
 
     /** The only place a member type string is looked at: it picks which class to create. */
-    public void addMember(String id, String name, String type) {
+    public void addMember(String id, String name, String type) throws LibraryException {
+        if (members.containsKey(id)) {
+            throw new InvalidInputException("member " + id + " already exists");
+        }
         Member member;
         switch (type) {
             case "STUDENT": member = new Student(id, name); break;
             case "STAFF":   member = new Staff(id, name); break;
             case "FACULTY": member = new Faculty(id, name); break;
-            default: throw new IllegalArgumentException("unknown member type " + type);
+            default: throw new InvalidInputException("invalid member type " + type);
         }
         members.put(id, member);
     }
@@ -142,7 +152,10 @@ public class Library {
     }
 
     /** Moves time forward and returns the new day. */
-    public int advance(int days) {
+    public int advance(int days) throws InvalidInputException {
+        if (days < 0 || days > Integer.MAX_VALUE - currentDay) {
+            throw new InvalidInputException("invalid number of days " + days);
+        }
         currentDay += days;
         return currentDay;
     }

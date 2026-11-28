@@ -3,7 +3,7 @@
 A command-driven library system in Java that manages **items**, **members** and **loans**, with simulated time, fines, reports and reservations.
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk)
-![Tests](https://img.shields.io/badge/tests-4%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-5%20passing-brightgreen)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-blue)
 
 The program reads one command per line from standard input and prints the result of each command to standard output. Time starts at **day 0** and only moves forward with `ADVANCE`. The system clock is never used.
@@ -65,6 +65,8 @@ The code adds a few small things to the diagram above:
 | `LibraryItem` | `isBorrowable()` | Returns `this instanceof Borrowable`, so the item decides whether it can be lent |
 | `Library` | `reserve(memberId, itemId)` | Bonus `RESERVE` command, which uses the `reservations` map |
 | `Library` | `getCurrentDay()`, private `findItem`, `findMember`, `isAtLimit` | The not-found and limit exceptions are thrown from these helpers |
+| `Library` | private `addItem` | Rejects duplicate item IDs in one place |
+| `InvalidInputException` | New subclass of `LibraryException` | Reports malformed input as `ERROR` instead of crashing |
 
 ---
 
@@ -146,6 +148,22 @@ Every failure is a custom exception that extends `LibraryException`. Each one is
 | `BorrowLimitExceededException` | `<memberId> has reached the limit of <max>` |
 | `ItemNotOnLoanException` | `<id> is not on loan` |
 | `ReservationNotAllowedException` | `<id> is available` / `<memberId> already has <id>` / `<memberId> already reserved <id>` |
+| `InvalidInputException` | See *Invalid input* below |
+
+### Invalid input
+Any line that doesn't match the expected form is reported as an error, and the program carries on with the next line. `Main.parse()` checks the format, and `Library` checks values such as the member type, duplicate IDs and the number of days.
+
+| Input | Example | Message |
+|---|---|---|
+| Unknown command (commands are case-sensitive) | `HELLO`, `borrow\|S1\|B1` | `unknown command <name>` |
+| No command name | `\|` | `missing command` |
+| Too few or too many fields | `BORROW\|S1` | `invalid format, expected BORROW\|memberId\|itemId` |
+| Empty field | `BORROW\|\|B1` | `invalid format, expected BORROW\|memberId\|itemId` |
+| Bad member type | `ADD_MEMBER\|S9\|Ann\|ADMIN` | `invalid member type ADMIN` |
+| Duplicate ID | `ADD_BOOK\|B1\|...` (B1 exists) | `item B1 already exists` / `member S1 already exists` |
+| Days not a whole number ≥ 0 | `ADVANCE\|-5`, `ADVANCE\|abc` | `invalid number of days <value>` |
+
+Spaces around fields are trimmed, so ` BORROW | S1 | B1 ` works. Blank lines are skipped.
 
 ---
 
@@ -170,6 +188,7 @@ diff out.txt tests/sample_expected.txt     # no output means it passed
 | `errors` | One case for each error |
 | `limits` | A Student, a Staff member and a Faculty member each reach their limit |
 | `reserve` | Reservation rules and automatic issue on return |
+| `invalid` | Malformed input: unknown commands, wrong field counts, bad numbers, bad member types, duplicate IDs |
 
 ---
 
@@ -189,7 +208,7 @@ diff out.txt tests/sample_expected.txt     # no output means it passed
 │   ├── Book.java  Magazine.java  ReferenceBook.java
 │   ├── Member.java        # Abstract member
 │   ├── Student.java  Staff.java  Faculty.java
-│   └── *Exception.java    # LibraryException and its 6 subclasses
+│   └── *Exception.java    # LibraryException and its 7 subclasses
 └── tests/
     ├── run_tests.sh
     └── <name>.txt / <name>_expected.txt

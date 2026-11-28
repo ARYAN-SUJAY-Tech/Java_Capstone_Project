@@ -1,0 +1,24 @@
+OK
+OK
+ERROR unknown command HELLO
+ERROR unknown command borrow
+ERROR invalid format, expected BORROW|memberId|itemId
+ERROR invalid format, expected BORROW|memberId|itemId
+ERROR invalid format, expected BORROW|memberId|itemId
+ERROR invalid format, expected ADD_BOOK|id|title|author
+ERROR invalid member type ADMIN
+ERROR invalid member type student
+ERROR item B1 already exists
+ERROR member S1 already exists
+ERROR invalid number of days abc
+ERROR invalid number of days -5
+ERROR invalid number of days 2.5
+ERROR invalid number of days 99999999999
+ERROR invalid format, expected ADVANCE|days
+ERROR invalid format, expected RETURN|itemId
+ERROR invalid format, expected SEARCH|text
+ERROR invalid format, expected OVERDUE
+ERROR missing command
+OK due on day 14
+OK today is day 0
+B1|BOOK|ON_LOAN|S1
